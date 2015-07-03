@@ -16,6 +16,8 @@ var yargs = require('yargs')
   .describe('c', 'cookie for the CouchDB database (if it\'s protected)')
   .alias('s', 'split')
   .describe('s', 'split into multiple files, for every n docs')
+  .alias('f', 'filter')
+  .describe('f', 'use filter function')
   .example('$0 http://localhost:5984/mydb > dump.txt',
     'Dump from the "mydb" CouchDB to dump.txt')
   .example('$0 /path/to/mydb > dump.txt',
@@ -26,6 +28,8 @@ var yargs = require('yargs')
     'Dump every 100 documents to dump_00.txt, dump_01.txt, dump_02.txt, etc.')
   .example('$0 http://example.com/mydb -u myUsername -p myPassword > dump.txt',
     'Specify a CouchDB username and password if it\'s protected');
+  .example('$0 http://example.com/mydb -f myDDoc/myFilter -u myUserName -p myPassword > dump.txt');
+
 
 var argv = yargs.argv;
 
@@ -116,6 +120,11 @@ return new Promise(function (resolve, reject) {
   return new PouchDB(dbName, dbOpts);
 }).then(function (db) {
   var dumpOpts = {};
+  if(argv.f) {
+    console.log('filter');
+    console.log(argv.f);
+    dumpOpts.filter = argv.f;
+  }
   if (!split) {
     var outstream = outfile ? fs.createWriteStream(outfile) : process.stdout;
     return db.dump(outstream, dumpOpts);
