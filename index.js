@@ -224,5 +224,6 @@ return new Promise(function (resolve, reject) {
 }).catch(function (err) {
   console.error('unexpected error');
   console.error(err);
+  console.trace();
   process.exit(1);
 });
