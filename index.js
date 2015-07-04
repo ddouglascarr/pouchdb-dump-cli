@@ -69,7 +69,8 @@ if(cookie) {
   dbOpts.ajax = {
     headers: {
       Cookie: cookie
-    }
+    },
+    timeout: 600000
   }
 }
 
