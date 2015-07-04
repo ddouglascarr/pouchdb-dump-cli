@@ -27,8 +27,9 @@ var yargs = require('yargs')
   .example('$0 /path/to/mydb -o dump.txt -s 100',
     'Dump every 100 documents to dump_00.txt, dump_01.txt, dump_02.txt, etc.')
   .example('$0 http://example.com/mydb -u myUsername -p myPassword > dump.txt',
-    'Specify a CouchDB username and password if it\'s protected');
-  .example('$0 http://example.com/mydb -f myDDoc/myFilter -u myUserName -p myPassword > dump.txt');
+    'Specify a CouchDB username and password if it\'s protected')
+  .example('$0 http://example.com/mydb -f myDDoc/myFilter -u myUserName -p myPassword > dump.txt',
+    'Specify a filter');
 
 
 var argv = yargs.argv;
