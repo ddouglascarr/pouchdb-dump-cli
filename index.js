@@ -70,7 +70,7 @@ if(cookie) {
     headers: {
       Cookie: cookie
     },
-    timeout: 600000
+    timeout: 6000000
   }
 }
 
@@ -238,6 +238,5 @@ return new Promise(function (resolve, reject) {
   console.error(err);
   console.log(err.results.errors[0]);
   console.trace();
-  console.error(err.stack);
   process.exit(1);
 });
