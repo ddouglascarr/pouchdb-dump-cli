@@ -139,7 +139,11 @@ return new Promise(function (resolve, reject) {
       process.stdout.setEncoding('utf8');
       outstream = process.stdout;
     }
-    return db.dump(outstream, dumpOpts);
+    return db.dump(outstream, dumpOpts)
+    .on('ESOCKETTIMEDOUT', function () {
+        // do something
+        console.log('ESOCKETTIMEDOUT: ignoring');
+    });;
   }
 
   // estimate a good batch size. it doesn't affect the integrity of the output,
