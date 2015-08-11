@@ -124,7 +124,7 @@ return new Promise(function (resolve, reject) {
   var dumpOpts = {};
   if(argv.f) {
     console.log('filter');
-    console.log(argv.f);
+    console.log(argv.f); 
     dumpOpts.filter = argv.f;
   }
   if (!split) {
