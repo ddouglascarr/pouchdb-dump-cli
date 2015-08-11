@@ -121,7 +121,9 @@ return new Promise(function (resolve, reject) {
 }).then(function () {
   return new PouchDB(dbName, dbOpts);
 }).then(function (db) {
-  var dumpOpts = {};
+  var dumpOpts = {
+    timeout: 600000
+  };
   if(argv.f) {
     console.log('filter');
     console.log(argv.f);
@@ -138,12 +140,17 @@ return new Promise(function (resolve, reject) {
       // otherwise for instance German umlaute are mangled
       process.stdout.setEncoding('utf8');
       outstream = process.stdout;
+      process.on('ESOCKETTIMEDOUT', function () {
+        // do something
+        console.log('ESOCKETTIMEDOUT: ignoring');
+      });
     }
     return db.dump(outstream, dumpOpts)
     .on('ESOCKETTIMEDOUT', function () {
         // do something
         console.log('ESOCKETTIMEDOUT: ignoring');
-    });;
+    });
+
   }
 
   // estimate a good batch size. it doesn't affect the integrity of the output,
