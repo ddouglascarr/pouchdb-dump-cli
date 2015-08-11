@@ -227,7 +227,11 @@ return new Promise(function (resolve, reject) {
     first = false;
     next();
   });
-  return db.dump(splitStream, dumpOpts).then(function () {
+  return db.dump(splitStream, dumpOpts)
+    .on('ESOCKETTIMEDOUT', function () {
+        // do something
+        console.log("ESOCKETTIMEDOUT: ignore 2");
+    }).then(function () {
     if (out.length) {
       dumpToSplitFile();
     }
